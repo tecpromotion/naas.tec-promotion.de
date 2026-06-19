@@ -38,6 +38,7 @@
 
     .kicker {
       font-size: clamp(0.75rem, 2.5vw, 1rem);
+      font-weight: 400;
       letter-spacing: 0.4em;
       text-transform: uppercase;
       color: var(--muted);
@@ -86,7 +87,7 @@
       font-size: 0.72rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: #555;
+      color: #808080; /* >= 4.5:1 on black (WCAG AA) */
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -95,9 +96,9 @@
   </style>
 </head>
 <body>
-  <p class="kicker">No&nbsp;as&nbsp;a&nbsp;Service</p>
+  <h1 class="kicker">No&nbsp;as&nbsp;a&nbsp;Service</h1>
 
-  <div id="stage" aria-live="polite">
+  <div id="stage">
     <div id="word" lang="en">No</div>
   </div>
   <p id="label" class="label">English</p>
