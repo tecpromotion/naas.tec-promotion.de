@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="No as a Service (NaaS): whatever the question, the answer is no — in every language. Free, unlimited and absolutely final.">
+  <meta name="theme-color" content="#000000">
+  <title>No as a Service</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%23fff' stroke-width='3'/%3E%3Cline x1='9' y1='9' x2='23' y2='23' stroke='%23fff' stroke-width='3'/%3E%3C/svg%3E">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --fg: #ffffff;
+      --muted: #8a8a8a;
+      --bg: #000000;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6vh 1.25rem;
+      gap: clamp(1rem, 4vh, 2.5rem);
+      overflow: hidden;
+    }
+
+    .kicker {
+      font-size: clamp(0.75rem, 2.5vw, 1rem);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-left: 0.4em; /* compensate trailing letter-spacing */
+    }
+
+    #stage {
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    #stage.fade {
+      opacity: 0;
+      transform: translateY(0.15em);
+    }
+
+    #word {
+      font-size: clamp(4rem, 22vw, 16rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      word-break: break-word;
+    }
+
+    .label {
+      font-size: clamp(0.85rem, 2.5vw, 1.1rem);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      min-height: 1.4em;
+    }
+
+    .desc {
+      max-width: 38ch;
+      font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+      line-height: 1.6;
+      color: #cfcfcf;
+    }
+
+    .desc strong { color: var(--fg); }
+
+    footer {
+      position: fixed;
+      bottom: 1.1rem;
+      left: 0;
+      right: 0;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #555;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #stage { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <p class="kicker">No&nbsp;as&nbsp;a&nbsp;Service</p>
+
+  <div id="stage" aria-live="polite">
+    <div id="word" lang="en">No</div>
+  </div>
+  <p id="label" class="label">English</p>
+
+  <p class="desc">
+    Whatever you are asking &mdash; the answer is&nbsp;no. Here you get
+    <strong>No&nbsp;as&nbsp;a&nbsp;Service</strong>: a clear, reliable
+    &ldquo;no&rdquo; in every language. Free, unlimited and absolutely final.
+  </p>
+
+  <footer>NaaS &middot; The answer is no &middot; naas.tec-promotion.de</footer>
+
+  <script>
+    "use strict";
+
+    var NOS = [
+      { no: "No",        lang: "English",      code: "en" },
+      { no: "Nein",      lang: "Deutsch",      code: "de" },
+      { no: "Non",       lang: "Français", code: "fr" },
+      { no: "No",        lang: "Español",  code: "es" },
+      { no: "No",        lang: "Italiano",     code: "it" },
+      { no: "Não",  lang: "Português", code: "pt" },
+      { no: "Nee",       lang: "Nederlands",   code: "nl" },
+      { no: "Nej",       lang: "Svenska",      code: "sv" },
+      { no: "Nej",       lang: "Dansk",        code: "da" },
+      { no: "Nei",       lang: "Norsk",        code: "no" },
+      { no: "Ei",        lang: "Suomi",        code: "fi" },
+      { no: "Nie",       lang: "Polski",       code: "pl" },
+      { no: "Ne",        lang: "Čeština", code: "cs" },
+      { no: "Nem",       lang: "Magyar",       code: "hu" },
+      { no: "Nu",        lang: "Română", code: "ro" },
+      { no: "Όχι", lang: "Ελληνικά", code: "el" },
+      { no: "Нет", lang: "Русский", code: "ru" },
+      { no: "Ні",  lang: "Українська", code: "uk" },
+      { no: "Hayır", lang: "Türkçe", code: "tr" },
+      { no: "لا", lang: "العربية", code: "ar", rtl: true },
+      { no: "לא", lang: "עברית", code: "he", rtl: true },
+      { no: "नहीं", lang: "हिन्दी", code: "hi" },
+      { no: "不",    lang: "中文",  code: "zh" },
+      { no: "いいえ", lang: "日本語", code: "ja" },
+      { no: "아니요", lang: "한국어", code: "ko" },
+      { no: "ไม่", lang: "ไทย", code: "th" },
+      { no: "Không", lang: "Tiếng Việt", code: "vi" },
+      { no: "Tidak",     lang: "Bahasa Indonesia", code: "id" },
+      { no: "Hapana",    lang: "Kiswahili",    code: "sw" },
+      { no: "Na",        lang: "Cymraeg",      code: "cy" },
+      { no: "ʻAʻole", lang: "ʻŌlelo Hawaiʻi", code: "haw" },
+      { no: "Ne",        lang: "Esperanto",    code: "eo" },
+      { no: "Non",       lang: "Latina",       code: "la" },
+      { no: "ghobeʼ", lang: "tlhIngan Hol", code: "tlh" }
+    ];
+
+    // Fisher-Yates shuffle so every visit feels a little different.
+    for (var i = NOS.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = NOS[i]; NOS[i] = NOS[j]; NOS[j] = tmp;
+    }
+
+    var stage = document.getElementById("stage");
+    var word  = document.getElementById("word");
+    var label = document.getElementById("label");
+    var idx   = 0;
+
+    function render(n) {
+      var item = NOS[n];
+      word.textContent = item.no;
+      word.setAttribute("lang", item.code);
+      word.setAttribute("dir", item.rtl ? "rtl" : "ltr");
+      label.textContent = item.lang;
+    }
+
+    render(0);
+    document.title = NOS[0].no + " — No as a Service";
+
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!reduce) {
+      setInterval(function () {
+        stage.classList.add("fade");
+        setTimeout(function () {
+          idx = (idx + 1) % NOS.length;
+          render(idx);
+          stage.classList.remove("fade");
+        }, 350);
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
